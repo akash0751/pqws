@@ -44,7 +44,7 @@ You can get a free Twilio trial and phone number from https://www.twilio.com/try
 npm run dev
 
 ## API Endpoints
-1. POST /api/send-otp
+1. POST /pq/register
 Send OTP to user's phone number.
 
 Request Body:
@@ -61,7 +61,7 @@ json
 
 { "message": "OTP sent successfully" }
 
-2. POST /api/verify-otp
+2. POST /pq/otpVerify
 Verify the received OTP and issue JWT.
 
 Request Body:
