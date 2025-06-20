@@ -42,7 +42,7 @@ EMAIL_PASS=your_app_password
 💡 Use Gmail App Passwords if you're using Gmail with 2FA.
 
 ## API Endpoints
-🔹 1. POST /api/user
+🔹 1. POST /pq/user
 Register a new user and send OTP to their email
 
 Request Body:
@@ -54,7 +54,7 @@ json
   "password": "john123"
 }
 
-🔹 2. POST /api/verifyUser
+🔹 2. POST /pq/verifyUser
 Verify email OTP to activate user
 
 Request Body:
@@ -66,7 +66,7 @@ json
 
 User created Successfully
 
-🔹 3. POST /api/login
+🔹 3. POST /pq/login
 Login with email & password
 
 Request Body:
@@ -85,7 +85,7 @@ json
   "token": "eyJhbGciOi..."
 }
 
-🔹 4. POST /api/forgotPassword
+🔹 4. POST /pq/forgotPassword
 Send OTP to email to reset password
 
 Request Body:
@@ -95,7 +95,7 @@ json
   "email": "john@gmail.com"
 }
 
-🔹 5. POST /api/verifyOtp
+🔹 5. POST /pq/verifyOtp
 Verify OTP for password reset
 
 Request Body:
@@ -105,7 +105,7 @@ json
   "otp": 123456
 }
 
-🔹 6. POST /api/resetPassword
+🔹 6. POST /pq/resetPassword
 Reset the user's password
 
 Request Body:
