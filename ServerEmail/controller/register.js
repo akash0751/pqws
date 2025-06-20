@@ -22,7 +22,7 @@ const sendMail = require('../Middleware/sendMail')
     const otp = Math.floor(100000 + Math.random() * 900000); 
 
     const user = { name, email, hashPassword };
-    const token = jwt.sign({ user, otp }, process.env.SECRET_CODE, { expiresIn: '5m' });
+    const token = jwt.sign({ user, otp }, process.env.JWT_SECRET, { expiresIn: '5m' });
 
     
     const message = `Your OTP is: ${otp}`;
@@ -51,7 +51,7 @@ const otpVerify = async (req, res) => {
       return res.status(401).send({ message: "Token not found, please register again" });
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET_CODE);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     if (Number(decoded.otp) !== Number(otp)) {
       return res.status(401).send({ message: "Invalid OTP" });
@@ -70,7 +70,7 @@ const otpVerify = async (req, res) => {
     
      const userObj = user.toObject()
      delete userObj.password
-    const finalToken = jwt.sign({ userId: user._id,role:user.role }, process.env.SECRET_CODE, { expiresIn: "7d" });
+    const finalToken = jwt.sign({ userId: user._id,role:user.role }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
     res.cookie("jwt", finalToken, {
       httpOnly: true,
@@ -99,7 +99,7 @@ const login = async(req,res)=>{
    const userObj = user.toObject()
      delete userObj.password
 
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.SECRET_CODE, { expiresIn: "1h" });
+    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
     
     res.cookie('jwt', token, {
         httpOnly: true,
@@ -118,7 +118,7 @@ const forgotPassword = async (req, res) => {
         const user = await UserEmail.findOne({ email });
         if(!user) {return res.status(400).json({ message: "User not found"})}
         const otp = Math.floor(100000 + Math.random() * 900000);
-    const token = jwt.sign({user,otp},process.env.SECRET_CODE,{expiresIn:'5m'})
+    const token = jwt.sign({user,otp},process.env.JWT_SECRET,{expiresIn:'5m'})
     const message = `your otp is ${otp}`
     sendMail(email, "Forget password",message)
     res.cookie('jwt',token,{
@@ -141,14 +141,14 @@ const forgotPassword = async (req, res) => {
         }
     
         try {
-            const decoded = jwt.verify(token, process.env.SECRET_CODE); 
+            const decoded = jwt.verify(token, process.env.JWT_SECRET); 
     
             if (Number(decoded.otp) !== Number(otp)) {
                 return res.status(400).json({ message: "Invalid OTP!" });
             }
     
             
-            const finalToken = jwt.sign({ email: decoded.user.email }, process.env.SECRET_CODE, { expiresIn: "10m" });
+            const finalToken = jwt.sign({ email: decoded.user.email }, process.env.JWT_SECRET, { expiresIn: "10m" });
     
             res.cookie("jwt", finalToken, {
               httpOnly: true,
@@ -173,7 +173,7 @@ const forgotPassword = async (req, res) => {
         }
     
         try {
-            const decoded = jwt.verify(token, process.env.SECRET_CODE); 
+            const decoded = jwt.verify(token, process.env.JWT_SECRET); 
             const user = await UserEmail.findOne({ email: decoded.email });
     
             if (!user) {

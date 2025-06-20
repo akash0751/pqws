@@ -15,7 +15,7 @@ const authMiddleware = (req, res, next) => {
        return res.status(401).json({ message: "Invalid token format" });
      }
  
-     jwt.verify(token, process.env.SECRET_CODE, (err, decoded) => {
+     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
    if (err) {
      console.error("JWT Verification Error:", err.message);
      return res.status(401).json({ message: "Invalid token: " + err.message });
